@@ -15,6 +15,15 @@
 
 #include <SparkFunMPL3115A2.h>
 
+const PROGMEM uint8_t dotImage[] =
+{
+	0b00000110,
+	0b00001111,
+	0b00001111,
+	0b00000110,
+};
+const int dotWidth = sizeof(dotImage);
+
 //Enables the pressure and temp measurement event flags so that we can
 //test against them. This is recommended in datasheet during setup.
 void enableEventFlags()
@@ -136,7 +145,7 @@ void setup() {
 	ssd1306_128x32_i2c_init();
 	ssd1306_fillScreen(0x00);
 
-	ssd1306_setFixedFont(ssd1306xled_font6x8);
+	ssd1306_setFixedFont(comic_sans_font24x32_123);
 
 	if (IIC_Read(WHO_AM_I) == 196)
 		Serial.println("MPL3115A2 online!");
@@ -152,8 +161,9 @@ void setup() {
 }
 
 void loop() {
-	static char buf[10];
+	static char buf[5];
 
+	//ssd1306_clearScreen();
 	Serial.println("Reading temperature...");
 
 	float tempC = readTemp();
@@ -161,9 +171,19 @@ void loop() {
 	Serial.print(tempC);
 	Serial.println(" C");
 
-	dtostrf(tempC, 5, 2, buf);
-	//ssd1306_clearScreen();
-	ssd1306_printFixedN(0, 0, buf, STYLE_NORMAL, FONT_SIZE_4X);
+	//dtostrf(tempC, 5, 2, buf);
+	//ssd1306_printFixed(0, 0, buf, STYLE_NORMAL);
+
+	int i = tempC;
+	snprintf(buf, sizeof(buf), "%2d", i);
+	ssd1306_printFixed(0, 0, buf, STYLE_NORMAL);
+
+	//ssd1306_drawRect(48, 22, 54, 28);
+	ssd1306_drawBitmap(48, 3, 4, 8, dotImage);
+
+	i = (tempC - i) * 100;
+	snprintf(buf, sizeof(buf), "%02d", i);
+	ssd1306_printFixed(54, 0, buf, STYLE_NORMAL);
 
 	delay(1000);
 }
