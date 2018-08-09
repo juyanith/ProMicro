@@ -89,10 +89,14 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\OLED Test;$(ProjectDir)..\..\..\..\Arduino\libraries\ssd1306\src;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.21\libraries\Wire\src;$(ProjectDir)..\..\..\..\Arduino\libraries\SparkFun_MPL3115A2_Altitude_and_Pressure_Sensor_Breakout\src;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.21\libraries\SPI\src;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.21\libraries\Wire\src\utility;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\libraries;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.21\libraries;$(ProjectDir)..\..\..\..\Arduino\libraries;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\SparkFun\hardware\avr\1.1.11\libraries;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.21\cores\arduino;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\SparkFun\hardware\avr\1.1.11\variants\promicro;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\avr\include;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\avr\include\avr;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\lib\gcc\avr\4.8.1\include;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\lib\gcc\avr\4.9.2\include;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>$(ProjectDir)__vm\.OLED Test.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PreprocessorDefinitions>__AVR_ATmega32u4__;__AVR_ATmega32U4__;F_CPU=16000000L;ARDUINO=10805;ARDUINO_AVR_PROMICRO;ARDUINO_ARCH_AVR;USB_VID=0x1b4f;USB_PID=0x9206;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

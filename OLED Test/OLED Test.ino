@@ -22,7 +22,19 @@ const PROGMEM uint8_t dotImage[] =
 	0b00001111,
 	0b00000110,
 };
-const int dotWidth = sizeof(dotImage);
+const int dotHeight = 8;
+const int dotWidth = 4;
+
+const PROGMEM uint8_t degreeImage[] =
+{
+	0b00011100,
+	0b00110110,
+	0b01100011,
+	0b00110110,
+	0b00011100,
+};
+const int degreeHeight = 8;
+const int degreeWidth = 5;
 
 //Enables the pressure and temp measurement event flags so that we can
 //test against them. This is recommended in datasheet during setup.
@@ -138,6 +150,31 @@ void setOversampleRate(byte sampleRate)
 	IIC_Write(CTRL_REG1, tempSetting);
 }
 
+void displayTemp(float tempC)
+{
+	static char int_buf[4], frac_buf[3];
+	static int int_val, frac_val;
+
+	//dtostrf(tempC, 5, 2, buf);
+	//ssd1306_printFixed(0, 0, buf, STYLE_NORMAL);
+
+	int i = (int)tempC;
+	int f = (tempC - i) * 100;
+
+	// if the temperature has changed
+	if (i != int_val || f != frac_val)
+	{
+		snprintf(int_buf, sizeof(int_buf), "%2d", i);
+		snprintf(frac_buf, sizeof(frac_buf), "%02d", f);
+
+		//ssd1306_clearScreen();
+		ssd1306_printFixed(0, 0, int_buf, STYLE_NORMAL);
+		ssd1306_drawBitmap(48, 3, dotWidth, dotHeight, dotImage);
+		ssd1306_printFixed(54, 0, frac_buf, STYLE_NORMAL);
+		ssd1306_drawBitmap(102, 0, degreeWidth, degreeHeight, degreeImage);
+	}
+}
+
 void setup() {
 	Serial.begin(9600);
 	while (!Serial);
@@ -161,29 +198,13 @@ void setup() {
 }
 
 void loop() {
-	static char buf[5];
-
-	//ssd1306_clearScreen();
 	Serial.println("Reading temperature...");
 
 	float tempC = readTemp();
-
 	Serial.print(tempC);
 	Serial.println(" C");
 
-	//dtostrf(tempC, 5, 2, buf);
-	//ssd1306_printFixed(0, 0, buf, STYLE_NORMAL);
-
-	int i = tempC;
-	snprintf(buf, sizeof(buf), "%2d", i);
-	ssd1306_printFixed(0, 0, buf, STYLE_NORMAL);
-
-	//ssd1306_drawRect(48, 22, 54, 28);
-	ssd1306_drawBitmap(48, 3, 4, 8, dotImage);
-
-	i = (tempC - i) * 100;
-	snprintf(buf, sizeof(buf), "%02d", i);
-	ssd1306_printFixed(54, 0, buf, STYLE_NORMAL);
+	displayTemp(tempC);
 
 	delay(1000);
 }
